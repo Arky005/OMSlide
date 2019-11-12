@@ -6,12 +6,13 @@
 		<script>
 		    $(function(){
 	
-            	var omslide = new OM_Slide(900, 500);
+            	var omslide = new OMSlide(700, 500);
             	omslide.addImg('https://om.blog.br/imgs/6.jpg');
             	omslide.addImg('https://om.blog.br/imgs/5.jpg');
             	omslide.addImg('https://om.blog.br/imgs/4.jpg');
             	omslide.addImg('https://om.blog.br/imgs/3.jpg');
             	omslide.addImg('https://om.blog.br/imgs/2.jpg');
+				omslide.startTimer(5000);
             	omslide.create('body');
             	
             });

@@ -1,15 +1,19 @@
-class OM_Slide {
+class OMSlide {
 	
 	constructor(width, height){
-		
-		if(width<document.documentElement.clientWidth-20)
+		if(width<$(window).width()-20)
 			this.width=width;
 		else
-			this.width=document.documentElement.clientWidth-20;
+			this.width=$(window).width()-20;
 		
 		this.height=height;
+		
+		this.initialWidth=width;
+		this.initialHeight=height;
+		
 		this.imgs=[];
 		this.currentPos=0;
+		
 		this.salt=parseInt(Math.random()*10000);
 		this.name_motherContainer='mother_container'+this.salt;
 		this.name_slide='slide'+this.salt;
@@ -17,7 +21,6 @@ class OM_Slide {
 		this.name_classImgs='imgs_slide'+this.salt;
 		this.name_botaoAnterior='botao_anterior'+this.salt;
 		this.name_botaoProximo='botao_proximo'+this.salt;
-		
 	}
 	
 	setWidth(valor){
@@ -44,8 +47,39 @@ class OM_Slide {
 		return this.imgs.length;
 	}
 	
+	startTimer(time){
+		var obj=this;
+		this.timer = setInterval(function(){
+			obj.nextImg();
+		}, time);
+	}
+	
+	stopTimer(){
+		clearInterval(this.timer);
+	}
+
+	nextImg(){
+		if(this.currentPos<this.getSize()-1){
+			$('#'+this.name_slide).animate({scrollLeft:(this.currentPos+1)*this.width}, 1000);
+			this.currentPos++;
+		} else {
+			$('#'+this.name_slide).animate({scrollLeft:0}, 1000);
+			this.currentPos=0;
+		}
+	}
+	
+	lastImg(){
+		if(this.currentPos>0){
+			$('#'+this.name_slide).animate({scrollLeft:(this.currentPos-1)*this.width}, 1000);
+			this.currentPos--;
+			
+		} else {
+			$('#'+this.name_slide).animate({scrollLeft:(this.getSize()-1)*this.width}, 1000);
+			this.currentPos=this.getSize()-1;
+		}
+	}
+	
 	update(){
-		
 		$('#'+this.name_motherContainer).css('display','flex');
 		$('#'+this.name_motherContainer).css('height', ''+this.height);
 		$('#'+this.name_motherContainer).css('overflow','hidden');
@@ -87,15 +121,12 @@ class OM_Slide {
 		
 		$('.'+this.name_classImgs).css('width',''+this.width);
 		$('.'+this.name_classImgs).css('height',''+this.height);
-		$('.'+this.name_classImgs).css('border-radius','30px');
-		
-		
+		$('.'+this.name_classImgs).css('border-radius','30px');	
 	}
 	
 	create(itemId){
-		
 		$(itemId).append("<div id='"+ this.name_motherContainer +"'></div>");
-			$('#'+this.name_motherContainer).append("<div id='"+ this.name_slide + "'>" +
+		$('#'+this.name_motherContainer).append("<div id='"+ this.name_slide + "'>" +
 				"<a href='#' id='"+this.name_botaoAnterior+"'><</a>"+
 				"<a href='#' id='"+this.name_botaoProximo+"'>></a></div>");
 		$('#'+this.name_slide).append("<div id='"+ this.name_imgsContainer+"'></div>");
@@ -108,34 +139,21 @@ class OM_Slide {
 		this.update();
 		var obj=this;
 		$('#'+this.name_botaoAnterior).click(function(){
-			if(obj.currentPos>0){
-				$('#'+obj.name_slide).animate({scrollLeft:(obj.currentPos-1)*obj.width}, 1000);
-				obj.currentPos--;
-				
-			} else {
-				$('#'+obj.name_slide).animate({scrollLeft:(obj.getSize()-1)*obj.width}, 1000);
-				obj.currentPos=obj.getSize()-1;
-			}
+			obj.lastImg();
 		});
 		
 		$('#'+this.name_botaoProximo).click(function(){
-		
-			if(obj.currentPos<obj.getSize()-1){
-				$('#'+obj.name_slide).animate({scrollLeft:(obj.currentPos+1)*obj.width}, 1000);
-				obj.currentPos++;
-			} else {
-				$('#'+obj.name_slide).animate({scrollLeft:0}, 1000);
-				obj.currentPos=0;
-			}
+			obj.nextImg();
 		});
 		
 		$( window ).resize(function() {
-			if(width>document.documentElement.clientWidth-20)
-				obj.width=document.documentElement.clientWidth-20;
+			if(obj.width>$(window).width()-20)
+				obj.width=$(window).width()-20;
+			else
+				obj.width=obj.initialWidth;
 			
 			obj.update();
 		});
-		
 		
 	}
 	
