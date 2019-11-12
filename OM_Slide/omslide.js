@@ -47,12 +47,15 @@ class OM_Slide {
 	update(){
 		
 		$('#'+this.name_motherContainer).css('display','flex');
+		$('#'+this.name_motherContainer).css('height', ''+this.height);
+		$('#'+this.name_motherContainer).css('overflow','hidden');
 		
 		$('#'+this.name_slide).css('display','flex');
 		$('#'+this.name_slide).css('width',''+this.width);
-		$('#'+this.name_slide).css('height',''+this.height);
+		$('#'+this.name_slide).css('height',''+(this.height+20));
 		$('#'+this.name_slide).css('align-items','center');
-		$('#'+this.name_slide).css('overflow','hidden');
+		$('#'+this.name_slide).css('overflow-x','scroll');
+		$('#'+this.name_slide).css('overflow-y','hidden');
 		
 		$('#'+this.name_botaoAnterior).css('z-index','999');
 		$('#'+this.name_botaoAnterior).css('position','absolute');
@@ -86,6 +89,7 @@ class OM_Slide {
 		$('.'+this.name_classImgs).css('height',''+this.height);
 		$('.'+this.name_classImgs).css('border-radius','30px');
 		
+		
 	}
 	
 	create(itemId){
@@ -105,11 +109,11 @@ class OM_Slide {
 		var obj=this;
 		$('#'+this.name_botaoAnterior).click(function(){
 			if(obj.currentPos>0){
-				$('#'+obj.name_imgsContainer).css({'transform':'translateX(-'+((obj.currentPos-1)*obj.width)+'px)'});
+				$('#'+obj.name_slide).animate({scrollLeft:(obj.currentPos-1)*obj.width}, 1000);
 				obj.currentPos--;
 				
 			} else {
-				$('#'+obj.name_imgsContainer).css({'transform':'translateX(-'+((obj.getSize()-1)*obj.width)+'px)'});
+				$('#'+obj.name_slide).animate({scrollLeft:(obj.getSize()-1)*obj.width}, 1000);
 				obj.currentPos=obj.getSize()-1;
 			}
 		});
@@ -117,18 +121,21 @@ class OM_Slide {
 		$('#'+this.name_botaoProximo).click(function(){
 		
 			if(obj.currentPos<obj.getSize()-1){
-				$('#'+obj.name_imgsContainer).css({'transform':'translateX(-'+((obj.currentPos+1)*obj.width)+'px)'});
+				$('#'+obj.name_slide).animate({scrollLeft:(obj.currentPos+1)*obj.width}, 1000);
 				obj.currentPos++;
 			} else {
-				$('#'+obj.name_imgsContainer).css({'transform':'translateX(0)'});
+				$('#'+obj.name_slide).animate({scrollLeft:0}, 1000);
 				obj.currentPos=0;
 			}
 		});
 		
 		$( window ).resize(function() {
-			obj.width=document.documentElement.clientWidth-20;
+			if(width>document.documentElement.clientWidth-20)
+				obj.width=document.documentElement.clientWidth-20;
+			
 			obj.update();
 		});
+		
 		
 	}
 	
