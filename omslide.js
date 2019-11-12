@@ -10,9 +10,11 @@ class OMSlide {
 		
 		this.initialWidth=width;
 		this.initialHeight=height;
+		this.initialTime=0;
 		
 		this.imgs=[];
 		this.currentPos=0;
+		this.currentPosValue=0;
 		
 		this.salt=parseInt(Math.random()*10000);
 		this.name_motherContainer='mother_container'+this.salt;
@@ -21,6 +23,10 @@ class OMSlide {
 		this.name_classImgs='imgs_slide'+this.salt;
 		this.name_botaoAnterior='botao_anterior'+this.salt;
 		this.name_botaoProximo='botao_proximo'+this.salt;
+		
+		this.stopWhenClicked=true;
+		
+		
 	}
 	
 	setWidth(valor){
@@ -49,9 +55,13 @@ class OMSlide {
 	
 	startTimer(time){
 		var obj=this;
-		this.timer = setInterval(function(){
-			obj.nextImg();
-		}, time);
+		if(time!=0){
+			this.initialTime=time;
+			clearInterval(this.timer);
+			this.timer = setInterval(function(){
+				obj.nextImg();
+			}, time);
+		}
 	}
 	
 	stopTimer(){
@@ -59,6 +69,7 @@ class OMSlide {
 	}
 
 	nextImg(){
+		this.stopTimer();
 		if(this.currentPos<this.getSize()-1){
 			$('#'+this.name_slide).animate({scrollLeft:(this.currentPos+1)*this.width}, 1000);
 			this.currentPos++;
@@ -69,6 +80,7 @@ class OMSlide {
 	}
 	
 	lastImg(){
+		this.stopTimer();
 		if(this.currentPos>0){
 			$('#'+this.name_slide).animate({scrollLeft:(this.currentPos-1)*this.width}, 1000);
 			this.currentPos--;
@@ -140,10 +152,16 @@ class OMSlide {
 		var obj=this;
 		$('#'+this.name_botaoAnterior).click(function(){
 			obj.lastImg();
+			
+			if(!obj.stopWhenClicked)
+				obj.startTimer(obj.initialTime);
 		});
 		
 		$('#'+this.name_botaoProximo).click(function(){
 			obj.nextImg();
+			
+			if(!obj.stopWhenClicked)
+				obj.startTimer(obj.initialTime);
 		});
 		
 		$( window ).resize(function() {
@@ -154,6 +172,23 @@ class OMSlide {
 			
 			obj.update();
 		});
+		
+		$('#'+this.name_slide).scroll(function(){
+			clearTimeout($.data(this, 'scrollTimer'));
+			$.data(this, 'scrollTimer', setTimeout(function() {
+				obj.currentPosValue=(obj.currentPos*obj.width);
+				if(obj.currentPosValue < $('#'+obj.name_slide).scrollLeft())
+					obj.nextImg();
+				else if(obj.currentPosValue > $('#'+obj.name_slide).scrollLeft())
+					obj.lastImg();
+				
+				if(!obj.stopWhenClicked)
+					obj.startTimer(obj.initialTime);
+			}, 150));
+		});
+		
+		//$('#'+this.name_slide).animate({scrollLeft:9}, 1000);
+		
 		
 	}
 	
