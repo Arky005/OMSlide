@@ -1,4 +1,4 @@
-class OMSlide {
+class OMSlider {
 	
 	constructor(width, height){
 		if(width<$(window).width())
@@ -239,7 +239,7 @@ class OMSlide {
 		$( window ).resize(function() {
 			if(obj.width>=$(window).width())
 				obj.width=$(window).width();
-			else if(obj.initialWidth>=$(window).width());
+			else if(obj.initialWidth>=$(window).width())
 					obj.width=$(window).width();
 			obj.currentPos=0;
 			$('#'+obj.name_slide).scrollLeft(0);
@@ -257,7 +257,7 @@ class OMSlide {
 					obj.lastImg();
 					obj.stopTimer();
 				}
-			}, 250));
+			}, 150));
 		});
 		
 	}
