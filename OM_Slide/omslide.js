@@ -88,7 +88,7 @@ class OM_Slide {
 		
 	}
 	
-	createSlide(itemId){
+	create(itemId){
 		
 		$(itemId).append("<div id='"+ this.name_motherContainer +"'></div>");
 			$('#'+this.name_motherContainer).append("<div id='"+ this.name_slide + "'>" +
@@ -133,25 +133,3 @@ class OM_Slide {
 	}
 	
 }
-
-$(function(){
-
-	function test(/**/){
-		var args=arguments;
-		for(var i=0; i<args.length; i++){
-			console.log(args[i]);
-		}
-	}
-	
-	var omslide = new OM_Slide(5000, 500);
-	omslide.addImg('https://om.blog.br/imgs/6.jpg');
-	omslide.addImg('https://om.blog.br/imgs/5.jpg');
-	omslide.createSlide('body');
-	
-	var omslide2 = new OM_Slide(500, 200);
-	omslide2.addImg('https://om.blog.br/imgs/3.jpg');
-	omslide2.addImg('https://om.blog.br/imgs/2.jpg');
-	omslide2.createSlide('body');
-	
-
-});
