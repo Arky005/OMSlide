@@ -5,7 +5,7 @@ OMSlider é uma biblioteca Javascript para criar facilmente sliders de imagens. 
 Demo: https://om.blog.br/testeslide/
 
 ## Iniciando
-Para usar esta biblioteca, você precisará do jQuery. Tudo o que você precisa fazer para importar o OMSlider para o seu projeto é adicionar uma referência dentro da tag  ```<head>``` , dessa forma:
+Para usar esta biblioteca, você precisa do jQuery. Tudo o que você precisa fazer para importar o OMSlider para o seu projeto é adicionar uma referência dentro da tag  ```<head>``` , dessa forma:
 ```html
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -60,7 +60,7 @@ Pra uma lista completa das funções disponíveis e como usá-las, acesse o link
 
 
 ### Criando o slider
-Depois de terminar de personalizar seu slider, você pode criá-lo. É muito simples, tudo o que você precisa fazer é dizer ao objeto omslider onde deseja mostrá-lo. Para fazer isso, usamos a função ```create```. Em nosso exemplo, o controle deslizante será colocado dentro do elemento ```<div id="omsliderExample">```.
+Depois de terminar de personalizar seu slider, você pode criá-lo. É muito simples, tudo o que você precisa fazer é dizer ao objeto omslider onde deseja mostrá-lo. Para fazer isso, usamos a função ```create```. Em nosso exemplo, o slider será colocado dentro do elemento ```<div id="omsliderExample">```.
 ```html
 <html>
     <head>
