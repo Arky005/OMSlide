@@ -1,6 +1,6 @@
 # OMSlider
 
-OMSlider é uma biblioteca Javascript para criar facilmente sliders de imagens. Você pode personalizar o tamanho, cores, tempo e muito mais.
+OMSlider é uma biblioteca Javascript para criar sliders de imagens facilmente. Você pode personalizar o tamanho, cores, tempo e muito mais.
 
 Demo: https://om.blog.br/testeslide/
 
