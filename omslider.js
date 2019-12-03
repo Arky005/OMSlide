@@ -26,7 +26,8 @@ class OMSlider {
 		this.name_botaoProximo='botao_proximo'+this.salt;
 		
 		this.stopWhenClicked=true;
-		this.spaceBetweenImages=200;
+		this.showButtons=true;
+		this.spaceBetweenImages=0;
 		
 		this.buttonsBackgroundColor='rgba(0,0,0,0.4);';
 		this.buttonsTextColor='rgba(255,255,255,0.8);';
@@ -157,7 +158,7 @@ class OMSlider {
 			+"} "+
 			
 			"#"+ this.name_botaoAnterior+"{"+
-				"display:flex;"+
+				(this.showButtons ? "display:flex;" : "display:none;")+
 				"justify-content:center;"+
 				"align-items:center;"+
 				"z-index:999;"+
@@ -174,7 +175,7 @@ class OMSlider {
 			+"} "+
 			
 			"#"+ this.name_botaoProximo+"{"+
-				"display:flex;"+
+				(this.showButtons ? "display:flex;" : "display:none;")+
 				"justify-content:center;"+
 				"align-items:center;"+
 				"z-index:999;"+
