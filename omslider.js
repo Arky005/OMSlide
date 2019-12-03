@@ -26,6 +26,7 @@ class OMSlider {
 		this.name_botaoProximo='botao_proximo'+this.salt;
 		
 		this.stopWhenClicked=true;
+		this.spaceBetweenImages=200;
 		
 		this.buttonsBackgroundColor='rgba(0,0,0,0.4);';
 		this.buttonsTextColor='rgba(255,255,255,0.8);';
@@ -36,6 +37,10 @@ class OMSlider {
 		
 		this.borderRadius=20;
 		
+	}
+	
+	setSpaceBetweenImages(valor){
+		this.spaceBetweenImages=valor;
 	}
 	
 	setWidth(valor){
@@ -79,7 +84,8 @@ class OMSlider {
 
 	nextImg(){
 		if(this.currentPos<this.getSize()-1){
-			$('#'+this.name_slide).animate({scrollLeft:(this.currentPos+1)*this.width}, 1000);
+			$('#'+this.name_slide).animate({scrollLeft:((this.currentPos+1)*this.width)+
+				(this.spaceBetweenImages*(this.currentPos+1))}, 1000);
 			this.currentPos++;
 		} else {
 			$('#'+this.name_slide).animate({scrollLeft:0}, 1000);
@@ -89,11 +95,13 @@ class OMSlider {
 	
 	lastImg(){
 		if(this.currentPos>0){
-			$('#'+this.name_slide).animate({scrollLeft:(this.currentPos-1)*this.width}, 1000);
+			$('#'+this.name_slide).animate({scrollLeft:((this.currentPos-1)*this.width)+(
+				this.spaceBetweenImages*(this.currentPos-1))}, 1000);
 			this.currentPos--;
 			
 		} else {
-			$('#'+this.name_slide).animate({scrollLeft:(this.getSize()-1)*this.width}, 1000);
+			$('#'+this.name_slide).animate({scrollLeft:((this.getSize()-1)*this.width)+(
+				this.spaceBetweenImages*(this.getSize()-1))}, 1000);
 			this.currentPos=this.getSize()-1;
 		}
 	}
@@ -192,7 +200,8 @@ class OMSlider {
 			"."+ this.name_classImgs+"{"+
 				"height:"+this.height+"px;"+
 				"width:"+this.width+"px;"+
-				"border-radius:"+this.borderRadius+"px;"
+				"border-radius:"+this.borderRadius+"px;"+
+				"margin-right:"+this.spaceBetweenImages+"px;"
 			+"} ";
 		
 		
@@ -232,7 +241,7 @@ class OMSlider {
 			
 			if(!obj.stopWhenClicked)
 				obj.startTimer(obj.initialTime);
-			else https://om.blog.br/imgs/5.jpg
+			else 
 				obj.stopTimer();
 		});
 		
@@ -250,10 +259,10 @@ class OMSlider {
 			clearTimeout($.data(this, 'scrollTimer'));
 			$.data(this, 'scrollTimer', setTimeout(function() {
 				obj.currentPosValue=(obj.currentPos*obj.width);
-				if((obj.currentPosValue+30) < $('#'+obj.name_slide).scrollLeft()){
+				if((obj.currentPosValue+30)+this.spaceBetweenImages < $('#'+obj.name_slide).scrollLeft()){
 					obj.nextImg();
 					obj.stopTimer();
-				}else if((obj.currentPosValue-30) > $('#'+obj.name_slide).scrollLeft()){
+				}else if((obj.currentPosValue-30)+this.spaceBetweenImages > $('#'+obj.name_slide).scrollLeft()){
 					obj.lastImg();
 					obj.stopTimer();
 				}
