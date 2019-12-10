@@ -4,16 +4,16 @@
         <script src="omslider.js"></script>
         <script>
 			$(document).ready(function(){
-				var omslider = new OMSlider(700, 300);
-				omslider.addImg('https://om.blog.br/imgs/6.jpg');
+				var omslider = new OMSlider(700, 700);
+				omslider.addImg('https://om.blog.br/imgs/6.jpg', 'https://www.google.com');
 				omslider.addImg('https://om.blog.br/imgs/5.jpg');
-				omslider.addImg('https://om.blog.br/imgs/1.jpg');
-				omslider.startTimer(4000);
+				omslider.addImg('https://om.blog.br/imgs/1.jpg', 'https://om.blog.br');
+				//omslider.startTimer(4000);
 				omslider.create("#omsliderExample");
 			});
         </script>
     </head>
     <body>
-        <div id="omsliderExample"></div>
+      <div id="omsliderExample"></div>
     </body>
 </html>

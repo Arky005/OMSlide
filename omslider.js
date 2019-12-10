@@ -7,12 +7,12 @@ class OMSlider {
 			this.width=$(window).width();
 		
 		this.height=height;
-		
 		this.initialWidth=width;
 		this.initialHeight=height;
 		this.initialTime=0;
 		
 		this.imgs=[];
+		this.links=[];
 		this.currentPos=0;
 		this.currentPosValue=0;
 		this.slideStyle=0;
@@ -28,15 +28,19 @@ class OMSlider {
 		this.stopWhenClicked=true;
 		this.showButtons=true;
 		this.spaceBetweenImages=0;
+		this.openLinksInNewTab=true;
+		
 		
 		this.buttonsBackgroundColor='rgba(0,0,0,0.4);';
 		this.buttonsTextColor='rgba(255,255,255,0.8);';
 		this.buttonsFontSize=32;
-		this.buttonsBorderRadius=10;
+		this.buttonsBorderRadius=15;
 		this.buttonsHeight=30;
 		this.buttonsWidth=30;
 		
-		this.borderRadius=20;
+		this.borderRadius=0;
+		
+		
 		
 	}
 	
@@ -54,6 +58,11 @@ class OMSlider {
 	
 	addImg(img){
 		this.imgs.push(img);
+	}
+	
+	addImg(img, link){
+		this.imgs.push(img);
+		this.links.push(link);
 	}
 	
 	removeImg(pos){
@@ -107,6 +116,10 @@ class OMSlider {
 		}
 	}
 	
+	setOpenLinksInNewTab(valor){
+		this.openLinksInNewTab=valor;
+	}
+	
 	setStopWhenClicked(stop){
 		this.stopWhenClicked=stop;
 	}
@@ -151,7 +164,7 @@ class OMSlider {
 			"#"+ this.name_slide+"{"+
 				"display:flex;"+
 				"height:"+(this.height+20)+"px;"+
-				"width:"+this.width+"px;"+
+				"width:"+(this.width)+"px;"+
 				"align-items:center;"+
 				"overflow-x:scroll;"+
 				"overflow-y:hidden;"
@@ -219,8 +232,12 @@ class OMSlider {
 		$('#'+this.name_slide).append("<div id='"+ this.name_imgsContainer+"'></div>");
 		var i=0;
 		for(i=0; i<this.getSize(); i++){
-			$('#'+this.name_imgsContainer).append(
-			"<img src='"+this.imgs[i]+"' class='"+ this.name_classImgs +"'>");
+			if(typeof this.links[i] != 'undefined')
+				$('#'+this.name_imgsContainer).append(
+				"<a href='"+this.links[i]+( this.openLinksInNewTab ? "' target='_blank'" : "" )+"'><img src='"+this.imgs[i]+"' class='"+ this.name_classImgs +"'></a>");
+			else
+				$('#'+this.name_imgsContainer).append(
+				"<img src='"+this.imgs[i]+"' class='"+ this.name_classImgs +"'>");
 		}
 		
 		this.slideStyle = document.createElement('style');
