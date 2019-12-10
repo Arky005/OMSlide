@@ -27,9 +27,7 @@ class OMSlider {
 		
 		this.stopWhenClicked=true;
 		this.showButtons=true;
-		this.spaceBetweenImages=0;
 		this.openLinksInNewTab=true;
-		
 		
 		this.buttonsBackgroundColor='rgba(0,0,0,0.4);';
 		this.buttonsTextColor='rgba(255,255,255,0.8);';
@@ -37,15 +35,8 @@ class OMSlider {
 		this.buttonsBorderRadius=15;
 		this.buttonsHeight=30;
 		this.buttonsWidth=30;
-		
 		this.borderRadius=0;
-		
-		
-		
-	}
-	
-	setSpaceBetweenImages(valor){
-		this.spaceBetweenImages=valor;
+		this.spaceBetweenImages=0;
 	}
 	
 	setWidth(valor){
@@ -116,44 +107,7 @@ class OMSlider {
 		}
 	}
 	
-	setOpenLinksInNewTab(valor){
-		this.openLinksInNewTab=valor;
-	}
-	
-	setStopWhenClicked(stop){
-		this.stopWhenClicked=stop;
-	}
-	
-	setButtonsBackgroundColor(color){
-		this.buttonsBackgroundColor=color;
-	}
-	
-	setButtonsTextColor(color){
-		this.buttonsTextColor=color;
-	}
-	
-	setButtonsFontSize(size){
-		this.buttonsFontSize=size;
-	}
-	
-	setButtonsWidth(width){
-		this.buttonsWidth=width;
-	}
-	
-	setButtonsHeight(height){
-		this.buttonsHeight=height;
-	}
-	
-	setButtonsBorderRadius(value){
-		this.buttonsBorderRadius=value;
-	}
-	
-	setBorderRadius(value){
-		this.borderRadius=value;
-	}
-	
 	update(){
-
 		this.slideStyle.innerHTML = 
 			"#"+ this.name_motherContainer+"{"+
 				"display:flex;"+
@@ -218,13 +172,10 @@ class OMSlider {
 				"margin-right:"+this.spaceBetweenImages+"px;"
 			+"} ";
 		
-		
 		document.getElementsByTagName('head')[0].appendChild(this.slideStyle);
-	
 	}
 	
 	create(itemId){
-		
 		$(itemId).append("<div id='"+ this.name_motherContainer +"'></div>");
 		$('#'+this.name_motherContainer).append("<div id='"+ this.name_slide + "'>" +
 				"<a href='#' id='"+this.name_botaoAnterior+"'><</a>"+
@@ -286,7 +237,45 @@ class OMSlider {
 				}
 			}, 150));
 		});
-		
 	}
 	
+	setSpaceBetweenImages(valor){
+		this.spaceBetweenImages=valor;
+	}
+	
+	setOpenLinksInNewTab(valor){
+		this.openLinksInNewTab=valor;
+	}
+	
+	setStopWhenClicked(stop){
+		this.stopWhenClicked=stop;
+	}
+	
+	setButtonsBackgroundColor(color){
+		this.buttonsBackgroundColor=color;
+	}
+	
+	setButtonsTextColor(color){
+		this.buttonsTextColor=color;
+	}
+	
+	setButtonsFontSize(size){
+		this.buttonsFontSize=size;
+	}
+	
+	setButtonsWidth(width){
+		this.buttonsWidth=width;
+	}
+	
+	setButtonsHeight(height){
+		this.buttonsHeight=height;
+	}
+	
+	setButtonsBorderRadius(value){
+		this.buttonsBorderRadius=value;
+	}
+	
+	setBorderRadius(value){
+		this.borderRadius=value;
+	}
 }
