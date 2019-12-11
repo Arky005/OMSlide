@@ -112,12 +112,23 @@ class OMSlider {
 		}
 	}
 	
+	updateWidth(){
+		if(this.width>=$(window).width())
+			this.width=$(window).width();
+		else if(this.initialWidth>=$(window).width())
+			this.width=$(window).width();
+	}
+	
 	update(){
-		
 		this.botaoProximoMarginLeftIn=(this.width-(this.buttonsWidth+30));
 		this.botaoProximoMarginLeftOut=this.width;
 		this.botaoAnteriorMarginLeftIn=10;
 		this.botaoAnteriorMarginLeftOut=-(this.buttonsWidth+(this.buttonsPaddingHorizontal*2));
+		
+		this.updateWidth();
+		
+		this.currentPos=0;
+		$('#'+this.name_slide).scrollLeft(0);
 		
 		this.slideStyle.innerHTML = 
 			"#"+ this.name_motherContainer+"{"+
@@ -189,6 +200,14 @@ class OMSlider {
 		document.getElementsByTagName('head')[0].appendChild(this.slideStyle);
 		//muda a margin-right da ultima imagem para 0 para nao conflitar com o scroll e spaceBetweenImages.
 		document.getElementsByClassName(this.name_classImgs)[this.getSize()-1].style.marginRight=0;
+		
+		$( '#'+this.name_botaoAnterior ).css('font-size', this.buttonsFontSize+'pt');
+		$( '#'+this.name_botaoAnterior ).css('padding', (this.buttonsPaddingVertical) + " " +(this.buttonsPaddingHorizontal));
+		$( '#'+this.name_botaoAnterior ).css('margin-left', (this.buttonsPosition=='in' ? this.botaoAnteriorMarginLeftIn : this.botaoAnteriorMarginLeftOut)+'px');
+		
+		$( '#'+this.name_botaoProximo ).css('font-size', this.buttonsFontSize+'pt');
+		$( '#'+this.name_botaoProximo ).css('padding', (this.buttonsPaddingVertical) + " " +(this.buttonsPaddingHorizontal));
+		$( '#'+this.name_botaoProximo ).css('margin-left', (this.buttonsPosition=='in' ? this.botaoProximoMarginLeftIn : this.botaoProximoMarginLeftOut)+'px');
 	}
 	
 	create(itemId){
@@ -231,12 +250,6 @@ class OMSlider {
 		});
 		
 		$( window ).resize(function() {
-			if(obj.width>=$(window).width())
-				obj.width=$(window).width();
-			else if(obj.initialWidth>=$(window).width())
-					obj.width=$(window).width();
-			obj.currentPos=0;
-			$('#'+obj.name_slide).scrollLeft(0);
 			obj.update();
 		});
 		
@@ -248,6 +261,10 @@ class OMSlider {
 					if(parseInt(posicao)!=obj.currentPos){
 						obj.currentPos=parseInt(posicao);
 						$('#'+obj.name_slide).animate({scrollLeft:(parseInt(posicao)*obj.width)+(parseInt(posicao)*obj.spaceBetweenImages)}, 1000);
+						if(!obj.stopWhenClicked)
+							obj.startTimer(obj.initialTime);
+						else 
+							obj.stopTimer();
 					} 
 			}, 150));
 		});
