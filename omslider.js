@@ -37,7 +37,10 @@ class OMSlider {
 		this.buttonsWidth=30;
 		this.borderRadius=0;
 		this.spaceBetweenImages=0;
-		this.buttonsPadding=10;
+		this.buttonsPaddingVertical=10;
+		this.buttonsPaddingHorizontal=10;
+		this.buttonsPosition='in';
+		
 	}
 	
 	setWidth(valor){
@@ -101,26 +104,26 @@ class OMSlider {
 		if(this.currentPos>0){
 			$('#'+this.name_slide).animate({scrollLeft:((obj.currentPos-1)*obj.width)+(
 				obj.spaceBetweenImages*(obj.currentPos-1))}, 1000);
-				//setTimeout(function() {
-					this.currentPos--;
-				//}, 1000);
-					
-			
+				this.currentPos--;
 		} else {
 			$('#'+this.name_slide).animate({scrollLeft:((obj.getSize()-1)*obj.width)+(
 				obj.spaceBetweenImages*(obj.getSize()-1))}, 1000);
-				//setTimeout(function() {
-					this.currentPos=this.getSize()-1;
-				//}, 1000);
-			
+				this.currentPos=this.getSize()-1;
 		}
 	}
 	
 	update(){
+		
+		this.botaoProximoMarginLeftIn=(this.width-(this.buttonsWidth+30));
+		this.botaoProximoMarginLeftOut=this.width;
+		this.botaoAnteriorMarginLeftIn=10;
+		this.botaoAnteriorMarginLeftOut=-(this.buttonsWidth+(this.buttonsPaddingHorizontal*2));
+		
 		this.slideStyle.innerHTML = 
 			"#"+ this.name_motherContainer+"{"+
 				"display:flex;"+
 				"height:"+this.height+"px;"+
+				"margin-left:"+(this.buttonsPosition=='in' ? "0" : this.buttonsWidth+20)+"px;"+
 				"overflow:hidden;"
 			+"} "+
 			
@@ -142,8 +145,8 @@ class OMSlider {
 				"font-size:"+this.buttonsFontSize+"pt;"+
 				"height:"+this.buttonsHeight+"px;"+
 				"width:"+this.buttonsWidth+"px;"+
-				"margin-left:10px;"+
-				"padding:10px;"+
+				"margin-left:"+(this.buttonsPosition=='in' ? this.botaoAnteriorMarginLeftIn : this.botaoAnteriorMarginLeftOut)+"px;"+
+				"padding:"+ this.buttonsPaddingVertical +" "+this.buttonsPaddingHorizontal +";"+
 				"text-decoration:none;"+
 				"background-color:"+this.buttonsBackgroundColor+";"+
 				"color:"+this.buttonsTextColor+";"+
@@ -160,8 +163,8 @@ class OMSlider {
 				"font-size:"+this.buttonsFontSize+"pt;"+
 				"height:"+this.buttonsHeight+"px;"+
 				"width:"+this.buttonsWidth+"px;"+
-				"margin-left:"+(this.width-(this.buttonsWidth+30))+"px;"+
-				"padding:10px;"+
+				"margin-left:"+(this.buttonsPosition=='in' ? this.botaoProximoMarginLeftIn : this.botaoProximoMarginLeftOut)+"px;"+
+				"padding:"+ this.buttonsPaddingVertical +" "+this.buttonsPaddingHorizontal +";"+
 				"text-decoration:none;"+
 				"background-color:"+this.buttonsBackgroundColor+";"+
 				"color:"+this.buttonsTextColor+";"+
@@ -242,31 +245,31 @@ class OMSlider {
 			$.data(this, 'scrollTimer', setTimeout(function() {
 					var posicao=0;
 					posicao=($('#'+obj.name_slide).scrollLeft()+(posicao*obj.spaceBetweenImages)+(obj.width/2)) / (obj.width+obj.spaceBetweenImages);
-					console.log(parseInt(posicao));
 					if(parseInt(posicao)!=obj.currentPos){
-						$('#'+obj.name_slide).animate({scrollLeft:( (parseInt(posicao))*obj.width )}, 1000);
 						obj.currentPos=parseInt(posicao);
+						$('#'+obj.name_slide).animate({scrollLeft:(parseInt(posicao)*obj.width)+(parseInt(posicao)*obj.spaceBetweenImages)}, 1000);
 					} 
 			}, 150));
 		});
 		
-		
 		$( '#'+this.name_botaoAnterior ).hover(function() {
 			$( this ).css('font-size', (obj.buttonsFontSize+10)+'pt');
-			$( this ).css('padding', (obj.buttonsPadding+5)+'px');
+			$( this ).css('padding', (obj.buttonsPaddingVertical+5) + " " +(obj.buttonsPaddingHorizontal+5) );
+			$( this ).css('margin-left', (obj.buttonsPosition=='in' ? obj.botaoAnteriorMarginLeftIn : obj.botaoAnteriorMarginLeftOut-10)+'px');
 		}, function() {
 			$( this ).css('font-size', obj.buttonsFontSize+'pt');
-			$( this ).css('padding', obj.buttonsPadding+'px');
+			$( this ).css('padding', (obj.buttonsPaddingVertical) + " " +(obj.buttonsPaddingHorizontal));
+			$( this ).css('margin-left', (obj.buttonsPosition=='in' ? obj.botaoAnteriorMarginLeftIn : obj.botaoAnteriorMarginLeftOut)+'px');
 		});
 		
 		$( '#'+this.name_botaoProximo ).hover(function() {
 			$( this ).css('font-size', (obj.buttonsFontSize+10)+'pt');
-			$( this ).css('padding', (obj.buttonsPadding+5)+'px');
-			$( this ).css('margin-left', ((obj.width-(obj.buttonsWidth+30)))-10+'px');
+			$( this ).css('padding', (obj.buttonsPaddingVertical+5) + " " +(obj.buttonsPaddingHorizontal+5));
+			$( this ).css('margin-left', (obj.buttonsPosition=='in' ? obj.botaoProximoMarginLeftIn-10 : obj.botaoProximoMarginLeftOut)+'px');
 		}, function() {
 			$( this ).css('font-size', obj.buttonsFontSize+'pt');
-			$( this ).css('padding', obj.buttonsPadding+'px');
-			$( this ).css('margin-left', ((obj.width-(obj.buttonsWidth+30)))+'px');
+			$( this ).css('padding', (obj.buttonsPaddingVertical) + " " +(obj.buttonsPaddingHorizontal));
+			$( this ).css('margin-left', (obj.buttonsPosition=='in' ? obj.botaoProximoMarginLeftIn : obj.botaoProximoMarginLeftOut)+'px');
 		});
 	}
 	
@@ -304,6 +307,18 @@ class OMSlider {
 	
 	setButtonsBorderRadius(value){
 		this.buttonsBorderRadius=value;
+	}
+	
+	setButtonsPosition(valor){
+		this.buttonsPosition=valor;
+	}
+	
+	setButtonsPaddingVertical(valor){
+		this.buttonsPaddingVertical=valor;
+	}
+	
+	setButtonsPaddingHorizontal(valor){
+		this.buttonsPaddingHorizontal=valor;
 	}
 	
 	setBorderRadius(value){
