@@ -2,8 +2,6 @@
 
 OMSlider é uma biblioteca Javascript para criar sliders de imagens facilmente. Você pode personalizar o tamanho, cores, tempo e muito mais.
 
-Demo: https://om.blog.br/testeslide/
-
 ## Iniciando
 Para usar esta biblioteca, você precisa do jQuery. Tudo o que você precisa fazer para importar o OMSlider para o seu projeto é adicionar uma referência dentro da tag  ```<head>``` , dessa forma:
 ```html
